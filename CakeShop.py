@@ -42,7 +42,7 @@ A cake board is placed on the bottom. What can I get for you today?'''
                     self.frosting()
                 self.show_toppers()
                 self.topping()
-                self.receipt()
+                self.order_summary()
             else:
                 print("The cake can only have three layers at most.")
         except ValueError:
@@ -139,10 +139,8 @@ A cake board is placed on the bottom. What can I get for you today?'''
             self.topping()
         else:
             self.clear_all(finalize)
-
-    def receipt(self):
-        title = ["Layer", "Qty", "Price"]
-        data = [["Total Cost:", f"${CakeDelivery.total_cost:.2f}"]]
+            
+    def order_summary(self):
         # Create a Table
         while not self.cake_stack.has_no_items():
             popped = self.cake_stack.remove_item()
@@ -150,6 +148,11 @@ A cake board is placed on the bottom. What can I get for you today?'''
         for layer, qty in Counter(self.cake_layer).items():
             cost = self.cake_prices.get(layer)
             self.entry.append([layer, qty, f"${cost:.2f}"])
+        self.receipt()
+
+    def receipt(self):
+        title = ["Layer", "Qty", "Price"]
+        data = [["Total Cost:", f"${CakeDelivery.total_cost:.2f}"]]
         ask_user = input("\nWould you like a receipt? (Yes/No) ").title()
         if ask_user == "Yes":
             print("\n" + table(self.entry, headers=title, tablefmt="fancy_grid"))
@@ -158,6 +161,7 @@ A cake board is placed on the bottom. What can I get for you today?'''
         elif ask_user == "No":
             print("Thanks for your purchase. Come back anytime!")
             print("\n==============")
+            sys.exit()
         else:
             print("Invalid Input: Cannot print the receipt.")
             self.receipt()
