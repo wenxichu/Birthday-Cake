@@ -1,4 +1,5 @@
 import itertools
+import sys
 from tabulate import tabulate as table
 from collections import Counter
 from CakeMenu import menu1, menu2, menu3, Cake, Pricing
@@ -165,8 +166,9 @@ A cake board is placed on the bottom. What can I get for you today?'''
         if user_input == "Clear":
             print("Your order has been cleared.")
             self.cake_stack.cancel_order()
+            CakeDelivery.total_cost = 2.50
             print("\n==============")
-            CakeDelivery()
+            sys.exit()
 
 
 CakeDelivery()
